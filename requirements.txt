@@ -1,0 +1,22 @@
+# CiteGuard-RAG Dependencies
+# Core libraries for document ingestion, embeddings, retrieval, generation & validation
+
+pymupdf>=1.24.0
+sentence-transformers>=3.0.0
+torch>=2.2.0
+rank-bm25>=0.2.2
+scikit-learn>=1.4.0
+numpy>=1.26.0
+pydantic>=2.7.0
+pyyaml>=6.0.1
+python-dotenv>=1.0.1
+
+# Evaluation & Testing
+pytest>=8.0.0
+
+# UI
+streamlit>=1.35.0
+
+# Optional LLM providers
+requests>=2.31.0
+ollama>=0.2.0

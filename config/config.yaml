@@ -1,0 +1,55 @@
+# ==============================================================================
+# CiteGuard-RAG Configuration
+# Central configuration matching the parameters in Barua et al. (2026)
+# ==============================================================================
+
+embedding:
+  # Dense embedding model used in the research paper
+  model_name: "BAAI/bge-base-en-v1.5"
+  # Device: 'cpu' or 'cuda' (defaults to CPU for portability)
+  device: "cpu"
+  # Embeddings normalized to unit length for cosine similarity
+  normalize: true
+
+chunking:
+  # Maximum tokens per chunk (approx. 4 chars per token)
+  chunk_size: 600
+  # Token overlap between consecutive chunks
+  overlap: 120
+  # Minimum characters for a chunk to be considered informative
+  min_chunk_length: 50
+
+retrieval:
+  # Hybrid retrieval fusion weights: Score_hybrid = α * S_dense + (1-α) * S_sparse
+  semantic_weight: 0.65
+  lexical_weight: 0.35
+  # Total candidates retrieved across hybrid search
+  retrieval_top_k: 8
+  # Maximum evidence chunks passed to the LLM generator
+  generation_chunks: 4
+
+evidence:
+  # Heuristic threshold: min hybrid score required to consider evidence sufficient
+  minimum_score: 0.15
+  # Standardized refusal string defined in the paper
+  refusal_message: "The document does not contain sufficient information to answer this question."
+
+validation:
+  # Token overlap threshold between answer sentence and cited evidence
+  lexical_threshold: 0.10
+  # Cosine similarity threshold between sentence embedding and cited evidence embedding
+  semantic_threshold: 0.40
+  # Ratio of sentences that must be supported for the answer to be valid
+  # 1.0 = strict (all sentences must be grounded, matching paper's u == 0 rule)
+  supported_sentence_ratio_threshold: 1.0
+
+generation:
+  # Deterministic decoding
+  temperature: 0.0
+  # Maximum regeneration attempts using validation feedback (paper uses 1)
+  max_regeneration_attempts: 1
+  # Default provider: 'ollama' or 'api'
+  provider: "ollama"
+
+logging:
+  level: "INFO"
